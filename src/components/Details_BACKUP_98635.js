@@ -68,6 +68,10 @@ export default function ScrollDialog() {
       display: 'flex',
       justifyContent: 'flex-end',
       float: 'right',
+<<<<<<< HEAD
+      color: "#12517A"
+=======
+>>>>>>> c2c6257a49c286b7de2f4cff8c305f8824bc3132
     }
   }));
 

@@ -4,6 +4,10 @@ import Search from '../../components/Search'
 import Details from '../../components/Details'
 import {
   BrowserRouter as Router,
+<<<<<<< HEAD
+=======
+  Link,
+>>>>>>> c2c6257a49c286b7de2f4cff8c305f8824bc3132
   Route,
   Switch,
 } from 'react-router-dom';

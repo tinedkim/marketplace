@@ -68,6 +68,7 @@ export default function ScrollDialog() {
       display: 'flex',
       justifyContent: 'flex-end',
       float: 'right',
+      color: "#12517A"
     }
   }));
 
