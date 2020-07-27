@@ -1,0 +1,149 @@
+html,
+body {
+  height: 100%;
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#root,
+.App {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  list-style: none;
+}
+
+.button {
+  background-color: #f7b748;
+}
+
+.icon {
+  margin-bottom: 10px;
+}
+
+.toleft {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.tocenter {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.toright {
+  text-align: right;
+  margin-top: 20px;
+}
+.already {
+  text-align: center;
+  display: block;
+  margin: 0;
+  color: "black";
+  font-size: "16px";
+}
+
+.space {
+  margin-bottom: 10px;
+}
+
+.flipping-cards {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 85%;
+  left: 10%;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+.box {
+  background-color: transparent;
+  border-radius: 3px;
+  color: #fff;
+  position: absolute;
+  margin-top: 400;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 300px;
+  transform-style: preserve-3d;
+  perspective: 2000px;
+  transition: 0.4s;
+  text-align: center;
+}
+.box:before {
+  content: "";
+  top: 0;
+  left: 0;
+  background: transparent;
+  border-top: 20px solid #fff;
+  border-left: 20px solid #fff;
+  box-sizing: border-box;
+}
+.box:after {
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-bottom: 20px solid #fff;
+  border-right: 20px solid #fff;
+  box-sizing: border-box;
+}
+
+.box .fa2 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.colorpallet {
+  color: #fff;
+}
+
+.myClass {
+  height: 470px !important;
+}
+#style-1::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+#style-1::-webkit-scrollbar {
+  width: 17px;
+  background-color: #f5f5f5;
+}
+
+.main-container {
+  min-height: 100vh; /* will cover the 100% of viewport */
+  overflow: hidden;
+  display: block;
+  position: relative;
+  padding-bottom: 100px; /* height of your footer */
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #12517a;
+  color: #fff;
+}
