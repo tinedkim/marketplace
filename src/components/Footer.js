@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 import Modal from "react-bootstrap/Modal";
 import { ToastsContainer, ToastsStore } from "react-toasts";
-import "./App.css";
+import "../App.css";
 import { MDBBtn } from "mdbreact";
 import { SocialMediaIconsReact } from "social-media-icons-react";
-import NewWindow from "react-new-window";
 
 
 class Footer extends Component {
@@ -164,9 +163,7 @@ class Footer extends Component {
                 </td>
               </MDBBtn>
               <MDBBtn>
-              <Link to={{ pathname: "/Terms" }} style={{ color: "white", fontSize: "17px" }} target="_blank">
-                  Terms and Conditions
-              </Link>
+              
               </MDBBtn>
             </div>
           </MDBContainer>

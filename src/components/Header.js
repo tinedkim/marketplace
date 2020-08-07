@@ -1,14 +1,23 @@
 import React, { Component } from "react";
 import { Form, Button, Col } from "react-bootstrap";
-//import * as emailjs from "emailjs-com";
-
+import * as emailjs from "emailjs-com";
 import Modal from "react-bootstrap/Modal";
-
 import { ToastsContainer, ToastsStore } from "react-toasts";
 import { MDBBtn } from "mdbreact";
-import logo from "./logo.png";
+import Bttn from '@material-ui/core/Button';
+import "../App.css";
 
-import "./App.css";
+const validEmailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+const validPhoneRegex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+
+const validateForm = (errors) => {
+  let valid = true;
+  Object.values(errors).forEach(
+    // if we have an error string set valid to false
+    (val) => val.length > 0 && (valid = false)
+  );
+  return valid;
+}
 
 class Header extends Component {
   constructor(props) {
@@ -18,11 +27,23 @@ class Header extends Component {
       showModal1: false,
       showModal2: false,
       showModal3: false,
-      email: "",
-      password: "",
+      email: null,
+      password: null,
       modalIsOpen: false,
-      newFirstName: "",
-      newEmail: ""
+      newFirstName: null,
+      newLastName: null,
+      newEmail: null,
+      newPassworld: null,
+      number: null,
+      errors: {
+        newFirstName: '',
+        newLastName: '',
+        newEmail:'',
+        newPassword: '',
+        number: '',
+        email: '',
+        password: '',
+      }
     };
     this.changeState1 = this.changeState1.bind(this);
     this.changeState2 = this.changeState2.bind(this);
@@ -35,34 +56,76 @@ class Header extends Component {
     this.setState({ modalIsOpen: false });
   }
 
-  nameFirstNameChange = event => {
-    this.setState({ newFirstName: event.target.value });
-  };
-
-  nameEmailChange = event => {
-    this.setState({ newEmail: event.target.value });
-  };
   handleSubmit = event => {
     event.preventDefault();
-
     const templateId = "template_FNZvTKs9";
+
+    if(validateForm(this.state.errors)) {
+      console.info('Valid Form')
+    }else{
+      console.error('Invalid Form')
+    }
 
     this.sendFeedback(templateId, {
       newFirstName: this.state.newFirstName,
       newEmail: this.state.newEmail
     });
   };
-  handleEmailChange = event => {
-    this.setState({
-      email: event.target.value
-    });
-  };
 
-  handlePasswordChange = event => {
-    this.setState({
-      password: event.target.value
-    });
-  };
+handleChange = (event) => {
+  event.preventDefault();
+  const { name, value } = event.target;
+  let errors = this.state.errors;
+  //SIGN UP VALIDATION//
+  switch (name) {
+    case 'newFirstName':
+      errors.newFirstName = 
+        value.length < 2
+          ? 'First name must be at least 2 characters long!'
+          : '';
+      break;
+    case 'newLastName':
+      errors.newLastName = 
+        value.length < 2
+          ? 'Last name must be at least 2 characters long!'
+          : '';
+      break;
+    case 'newEmail': 
+      errors.newEmail = 
+        validEmailRegex.test(value)
+          ? ''
+          : 'Email is not valid!';
+      break;
+    case 'newPassword': 
+      errors.newPassword = 
+        value.length < 8
+          ? 'Password must be 8 characters long!'
+          : '';
+      break;
+    case 'number':
+      errors.number = 
+        validPhoneRegex.test(value)
+          ? ''
+          : 'Phone number is not valid!';
+        break;
+  //LOG IN VALIDATION//
+    case 'email':
+      errors.email = 
+        validEmailRegex.test(value)
+          ? ''
+          : 'Email is not valid!';
+        break;
+    default:
+      break;
+  }
+
+  this.setState({errors, [name]: value}, ()=> {
+    console.log(errors)
+  })
+
+  //this.setState({errors, [name]: value})
+
+  }
 
   changeState1() {
     this.setState({
@@ -100,50 +163,47 @@ class Header extends Component {
       showModal3: !this.state.showModal3
     });
   }
-  /*handleSignUp(e) {
-    e.preventDefault();
+
+  sendFeedback(templateId, variables) {
     const { newEmail, newFirstName } = this.state;
-    let templateParams = {
-      newEmail: newEmail,
-      newFirstName: newFirstName
-    };
     emailjs.send(
       "gmail",
-      "template_FNZvTKs9",
-      templateParams,
+      templateId,
+      variables,
       "user_wzos8lPUKwPXPkAOaRTiX"
+    ).then(res => {
+    	console.log('Email successfully sent!')
+  	})
+    .catch(err => console.error('Email failed to send!', err),
+    //this.resetForm()
     );
-    //this.resetForm();
-  }*/
+  }
 
+
+
+
+  
   render() {
+    const {errors} = this.state;
     return (
-      <div>
-        <nav
-          className="navbar navbar-light bg-light static-top"
-          style={{ padding: "0%" }}
-        >
-          <div
-            className="container-fluid"
-            style={{
-              backgroundColor: "#12517A",
-              color: "white",
-              height: 70
-            }}
-          >
-            <a>
-              <img src={logo} style={{ width: "160px" }} />
-            </a>
-            <Form>
-              <MDBBtn>
-                <a
+      <div style={{width: '100%'}}>
+        <Form>
+          <Bttn Button variant="contained" disableElevation style={{
+            color: "white",
+            fontSize: "18px",
+            backgroundColor: "#12517A",
+            display: 'flex',
+            justifyContent: 'flex-end',
+            margin: '5px',
+            float: 'right',
+            outline: 'none'}}>
+              <a
                   onClick={this.changeState1}
                   show={this.state.isLogin}
-                  style={{ color: "white", fontSize: "18px" }}
-                >
-                  Login
-                </a>
-              </MDBBtn>
+              >
+                Login
+              </a>
+          </Bttn>
               <Modal
                 style={{ zIndex: 50000 }}
                 show={this.state.showModal1}
@@ -161,7 +221,7 @@ class Header extends Component {
                       type="email"
                       placeholder="Enter email"
                       value={this.state.email}
-                      onChange={this.handleEmailChange}
+                      onChange={this.handleChange}
                     />
                   </Form.Group>
 
@@ -171,7 +231,7 @@ class Header extends Component {
                       type="password"
                       placeholder="Password"
                       value={this.state.password}
-                      onChange={this.handlePasswordChange}
+                      onChange={this.handleChange}
                     />
                   </Form.Group>
 
@@ -196,15 +256,22 @@ class Header extends Component {
                 </Form>
               </Modal>
               &nbsp;&nbsp;&nbsp;
-              <MDBBtn>
+              <Bttn Button variant="contained" disableElevation style={{
+                 color: "white",
+                 fontSize: "18px",
+                 backgroundColor: "#12517A",
+                 display: 'flex',
+                 justifyContent: 'flex-end',
+                 margin: '5px',
+                 float: 'right',
+                 outline: 'none'}}>
                 <a
                   onClick={this.changeState2}
                   show={this.state.isLogin}
-                  style={{ color: "white", fontSize: "18px" }}
                 >
                   Sign Up
                 </a>
-              </MDBBtn>
+              </Bttn>
               <Modal
                 style={{ zIndex: 50000 }}
                 show={this.state.showModal2}
@@ -214,6 +281,7 @@ class Header extends Component {
                   id="signup"
                   className="button"
                   style={{ padding: "20px" }}
+                  onSubmit={this.handleSubmit}
                 >
                   <Form.Group controlId="Header" className="space">
                     <h1 style={{ textAlign: "center" }}>Sign Up</h1>
@@ -228,8 +296,14 @@ class Header extends Component {
                         name="newEmail"
                         id="newEmail"
                         //onChange={this.onChange}
-                        onChange={this.newEmailChange}
+                        onChange={this.handleChange}
                       />
+                      {errors.newEmail.length > 0 && 
+                      <span 
+                        className='error'
+                        style= {{ fontSize: 10}
+                        }>
+                          {errors.newEmail}</span>}
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridPassword">
@@ -239,31 +313,47 @@ class Header extends Component {
                         placeholder="Password"
                         value={this.state.newPassword}
                         name="newPassword"
-                        onChange={this.onChange}
+                        onChange={this.handleChange}
                       />
+                      {errors.newPassword.length > 0 && 
+                      <span 
+                      className='error'
+                      style= {{ fontSize: 10}
+                      }>
+                        {errors.newPassword}</span>}
                     </Form.Group>
                   </Form.Row>
 
                   <Form.Group controlId="formGridFirstName">
                     <Form.Label style={{ fontSize: 18 }}>First Name</Form.Label>
                     <Form.Control
-                      placeholder=""
+                      //placeholder=""
                       value={this.state.newFirstName}
                       name="newFirstName"
                       id="newFirstName"
                       //onChange={this.onChange}
-                      onChange={this.newFirstNameChange}
+                      onChange={this.handleChange}
                     />
+                    {errors.newFirstName.length > 0 && 
+                    <span 
+                    className='error'
+                    style= {{ fontSize: 10}
+                    }>{errors.newFirstName}</span>}
                   </Form.Group>
 
                   <Form.Group controlId="formGridLastName">
                     <Form.Label style={{ fontSize: 18 }}>Last Name</Form.Label>
                     <Form.Control
-                      placeholder=""
+                      //placeholder=""
                       value={this.state.newLastName}
                       name="newLastName"
-                      onChange={this.onChange}
+                      onChange={this.handleChange}
                     />
+                    {errors.newLastName.length > 0 && 
+                    <span 
+                    className='error'
+                    style= {{ fontSize: 10}
+                    }>{errors.newLastName}</span>}
                   </Form.Group>
 
                   <Form.Row>
@@ -272,10 +362,15 @@ class Header extends Component {
                         Phone Number
                       </Form.Label>
                       <Form.Control
-                        value={this.state.newContact}
-                        name="newContact"
-                        onChange={this.onChange}
+                        value={this.state.number}
+                        name="number"
+                        onChange={this.handleChange}
                       />
+                      {errors.number.length > 0 && 
+                      <span 
+                      className='error'
+                      style= {{ fontSize: 10}
+                      }>{errors.number}</span>}
                     </Form.Group>
                   </Form.Row>
 
@@ -306,9 +401,7 @@ class Header extends Component {
                   </div>
                 </Form>
               </Modal>
-            </Form>
-          </div>
-        </nav>
+          </Form>
         <ToastsContainer store={ToastsStore} />
       </div>
     );
