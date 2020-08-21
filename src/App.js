@@ -1,64 +1,29 @@
-import React, { Component } from 'react';
-import './App.css';
-import Details from './components/Details'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import Terms from "./components/t&c";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import React from "react";
+import "./App.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Terms from "./components/terms";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import Home from "./Home/Home";
+import history from './components/history';
+import Routes from './Routes';
 
-class App extends Component {
-  
-  render() {
-    return(
-    <div>
-      <Navbar/>
-    <div className="main-container">
-    <body>
-      <div className = "card-container">
-        <div className ="card">
-          <Details/>
-        </div>
 
-        <div className ="card">
-          <Details/>
-        </div>
-
-        <div className ="card">
-          <Details/>
-        </div>
-
-        <div className ="card">
-          <Details/>
-        </div>
-
-        <div className ="card">
-          <Details/>
-        </div>
-
-        <div className ="card">
-          <Details/>
-        </div>
-
-        <div className ="card">
-          <Details/>
-        </div>
-
-        <div className ="card">
-          <Details/>
-        </div>
-
-        <div className ="card">
-          <Details/>
-        </div>
+export default function App() {
+  return (
+    <Router>
+      <div id="container">
+          <div id="header" className="sticky">
+            <Header />
+          </div>
+          <div id = "routes">
+            <Routes />
+          </div>
+          <div id="body" />
+          <div id="footer">
+            <Footer />
+          </div>
       </div>
-    </body>
-    </div>
-    </div>
-    )
-  }
+    </Router>
+  );
 }
-export default App;
