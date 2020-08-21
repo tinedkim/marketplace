@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   root: {
     width: 250,
     borderRadius: 10,
-    display:"inline-block"
+    display:"inline-block",
   },
   media: {
     height: 0,

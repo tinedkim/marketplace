@@ -1,20 +1,24 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { Link } from "react-router-dom";
 import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 import Modal from "react-bootstrap/Modal";
 import { ToastsContainer, ToastsStore } from "react-toasts";
 import "../App.css";
 import { MDBBtn } from "mdbreact";
 import { SocialMediaIconsReact } from "social-media-icons-react";
+import NewWindow from "react-new-window";
+import { Link, BrowserRouter, Route } from "react-router-dom";
+import Privacy from "./privacy";
+import history from "./history";
+import { Form, Button, Col } from "react-bootstrap";
 
-
-class Footer extends Component {
-  handleOnclick() {
-    window.open();
-  }
-
-  render() {
+  export default function Footer() {
+    const handleOnclick = () => {
+        window.open();
+    }
+    const showCurrentYear = () => {
+      return new Date().getFullYear();
+    }
     return (
       <MDBFooter className="footer">
         <MDBContainer fluid className="text-center text-md-left">
@@ -23,7 +27,7 @@ class Footer extends Component {
               <div className="colorpallet">
                 <h5
                   className="title"
-                  style={{ color: "#f7b748", fontSize: "17px" }}
+                  style={{ color: "#f7b748", fontSize: "17px"}}
                 >
                   Quick Links
                 </h5>
@@ -53,7 +57,10 @@ class Footer extends Component {
                     </a>
                   </MDBBtn>
                 </div>
-
+              </div>
+            </MDBCol>
+            <MDBCol style = {{justifyContent: "flex-end"}}>
+              <div>
                 <h5
                   className="toleft"
                   style={{ color: "#f7b748", fontSize: "17px" }}
@@ -64,7 +71,8 @@ class Footer extends Component {
                   style={{
                     flexDirection: "row",
                     color: "white",
-                    fontSize: "17px"
+                    fontSize: "17px",
+                    justifyContent: "flex-end"
                   }}
                 >
                   <MDBBtn>
@@ -149,29 +157,25 @@ class Footer extends Component {
           </MDBContainer>
           <MDBContainer className="tocenter">
             <div style={{ flexDirection: "row" }}>
-              <MDBBtn>
-                <td
-                  style={{ color: "white", fontSize: "17px" }}
-                  onClick={() =>
-                    window
-                      .open("", "Terms and Conditions", "width=200,height=100")
-                      .document.write("<h1>Privacy Policy</h1>")
-                  }
-                >
-                  {" "}
-                  Privacy Policy
-                </td>
-              </MDBBtn>
-              <MDBBtn>
-              
-              </MDBBtn>
+            <Button
+                variant="link"
+                href="/privacy"
+                style={{ color: "white", fontSize: "17px" }}
+              >
+                Privacy Policy
+              </Button>
+              <Button
+                variant="link"
+                href="/terms"
+                style={{ color: "white", fontSize: "17px" }}
+              >
+                Terms and Conditions
+              </Button>
             </div>
           </MDBContainer>
-          <MDBContainer>Copyright @2020 ProductHub</MDBContainer>
+          Copyright @{showCurrentYear()} ProductHub
         </div>
       </MDBFooter>
     );
   }
-}
 
-export default Footer;

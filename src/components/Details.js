@@ -8,7 +8,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '../components/Card';
-import Carousel from '../components/Carousel';
+import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Select from '../components/Select';
 import Textbox from '../components/Textbox';
@@ -20,6 +20,15 @@ import TextField from '@material-ui/core/TextField';
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
+
+  const images= [
+                  <img src={require('../references/litho.jpeg')} alt = "litho"/>,
+                  <img src={require('../references/frame.jpeg')} alt = "litho"/>,
+                  <img src={require('../references/frame.jpeg')} alt = "litho"/>,
+                  <img src={require('../references/litho.jpeg')} alt = "litho"/>,
+                  <img src={require('../references/frame.jpeg')} alt = "litho"/>,
+                  <img src={require('../references/frame.jpeg')} alt = "litho"/>
+                ]
 
   const handleClickOpen = scrollType => () => {
     setOpen(true);
@@ -43,11 +52,18 @@ export default function ScrollDialog() {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
+      zIndex: 9999,
     },
     button:{
       "&:focus": {
         outline: "0",
-      }, 
+      },
+      margin: "2vh 0vh"
+    },
+    container:{
+      borderRadius: 10,
+      display: "flex",
+      marginLeft: 10
     },
     paper: {
       padding: theme.spacing(2),
@@ -55,7 +71,7 @@ export default function ScrollDialog() {
       color: theme.palette.text.secondary,
     },
     grid:{
-      padding: 50,
+      padding: 75,
       fontFamily: "Roboto",
     },
     image:{
@@ -80,7 +96,7 @@ export default function ScrollDialog() {
   const classes = useStyles();
   return (
     <div>
-      <Button onClick={handleClickOpen("paper")} className = {classes.button}><Card/></Button>
+        <Button onClick={handleClickOpen("paper")} className = {classes.button}><Card/></Button>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -105,7 +121,9 @@ export default function ScrollDialog() {
           >
             <Grid container spacing={5}>
               <Grid item xs={6} className = {classes.grid}>
-                  <Carousel/>
+                <Carousel autoPlay>
+                  {images}
+                </Carousel>
               </Grid>
               <Grid item xs={6}>
                 <h1 style={{color: '#12517A', fontSize: "2em", lineHeight: '20%', marginTop: '0.7em'}}>Product Name</h1>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -9,10 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import logo from "../references/logo.png";
-import Header from './Header';
 import Search from './Search';
-import Footer from './Footer';
 //ICONS
 import CreateRoundedIcon from '@material-ui/icons/CreateRounded'; //custom
 import BuildRoundedIcon from '@material-ui/icons/BuildRounded'; //tools
@@ -32,11 +28,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
-  header: {
-    zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: "#12517A",
-    position: 'fixed',
-  },
   search: {
     height: 65,
     display: 'flex',
@@ -46,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    zIndex: 1
   },
   drawerPaper: {
     width: drawerWidth,
@@ -58,14 +50,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
   },
-  footer: {
-    zIndex: theme.zIndex.drawer + 1,
-    marginLeft: 0,
-    marginBottom: 0,
-    position: 'absolute',
-    top: '400vh',
-    bottom: 0,
-  },
 }));
 
 export default function ClippedDrawer() {
@@ -74,15 +58,6 @@ export default function ClippedDrawer() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar className={classes.header}>
-        <Toolbar>
-          <a>
-            <img src={logo} style={{ width: "160px" }} alt = "logo" noWrap/>
-          </a>
-          <Header />
-        </Toolbar>
-      </AppBar>
-
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -149,11 +124,6 @@ export default function ClippedDrawer() {
       <main className={classes.content}>
         <Toolbar />
       </main>
-      <AppBar className={classes.footer}>
-        <Toolbar>
-          <Footer  />
-        </Toolbar>
-      </AppBar>
     </div>
   );
 }

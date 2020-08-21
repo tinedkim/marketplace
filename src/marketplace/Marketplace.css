@@ -1,0 +1,15 @@
+
+.main-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 2;
+  align-content: space-around;
+  justify-content: space-around;
+  background-color:  #ffffff;
+  margin: 0vh 35vh 0vh 30vh;
+  padding: 5vh 40vh 5vh 10vh;
+
+}
